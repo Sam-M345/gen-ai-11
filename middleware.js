@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export function middleware(request) {
-  // Allow all requests for now.
+  // Allow all requests for now .
   return NextResponse.next();
 }
 
