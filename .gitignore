@@ -146,3 +146,12 @@ dist
 
 # vercel (if you added this locally for a reason)
 .vercel
+
+# Cursor AI specific rules
+/.cursor/rules/
+
+# Design Documents
+/Design Docs/
+
+# Standard Operating Procedures
+/SOP/
