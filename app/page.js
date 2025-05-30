@@ -711,7 +711,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#0a0b2e]">
       <div className="max-w-3xl mx-auto text-white">
         <h1 className="text-4xl font-bold text-center text-green-300 mb-8 main-title drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]">
-          Gen AI 110 🤖🚀
+          Gen AI 11 🤖🚀
         </h1>
 
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 shadow-xl">
