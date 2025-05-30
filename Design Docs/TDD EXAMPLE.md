@@ -4,7 +4,7 @@
 
 ### 1.1 Purpose
 
-This document outlines the technical design of the Advisee Text-to-Speech (TTS) web application, which allows users to convert written text into spoken audio using Google's Text-to-Speech API. The application provides a simple, user-friendly interface for generating high-quality audio from text input with multiple voice options.
+This document outlines the technical design of the Advisee Text-to-Speech (TTS) web application, which allows users to convert written text into spoken audio using Google's Text-to-Speech API. The application provides a simple, user-friendly interface, for generating high-quality audio from text input with multiple voice options.
 
 ### 1.2 Scope
 
