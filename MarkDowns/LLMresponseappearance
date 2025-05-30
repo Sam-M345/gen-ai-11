@@ -1,0 +1,186 @@
+You’re already close to having nicely styled Markdown output with Tailwind + the `@tailwindcss/typography` plugin, but a few tweaks can make the LLM responses more readable. Below are suggestions you can try in **ContentDisplay.jsx** [7]:
+
+---
+
+## 1. Increase paragraph spacing and line height
+
+Right now, your custom Markdown renderer replaces each paragraph (`p`) with:
+
+```js
+p: ({ node, ...props }) => {
+  const content = props.children;
+  if (typeof content === "string") {
+    const cleanText = content
+      .replace(/^(Response|Question|System):\s*/g, "")
+      .replace(
+        /\[([^\]]+)\]/g,
+        (match, p1) =>
+          `<span style="background-color: #ffff00" class="text-gray-900 px-1 rounded">[${p1}]</span>`
+      )
+      .replace(/\n/g, "<br/>");
+    return (
+      <p
+        className="my-0.5 leading-normal"
+        dangerouslySetInnerHTML={{ __html: cleanText }}
+      />
+    );
+  }
+  return <p className="my-0.5 leading-normal" {...props} />;
+},
+```
+
+- **`my-0.5`** is very tight vertical spacing, and **`leading-normal`** gives a moderate line height.
+- If you want paragraphs to “breathe,” increase margins and leading. For instance, you might switch to `my-3 leading-relaxed` or `my-4 leading-relaxed`:
+
+```diff
+return (
+  <p
+-   className="my-0.5 leading-normal"
++   className="my-4 leading-relaxed"
+    dangerouslySetInnerHTML={{ __html: cleanText }}
+  />
+);
+```
+
+This small change alone can make the text feel far more readable.
+
+> Tip: If you want the user’s actual newlines to create new paragraphs, consider _removing_ the `.replace(/\n/g, "<br/>")` so that ReactMarkdown’s normal paragraph-splitting logic can do its job.
+
+---
+
+## 2. Leverage Tailwind’s “prose” class more fully
+
+You’re already using `prose` classes in places, but your custom replacements override some built-in spacing. Tailwind’s Typography plugin is designed to handle paragraph spacing, bold text, lists, etc., in a consistent way. You can:
+
+1. Remove the overrides for paragraphs/lists if possible.
+2. Keep the `.prose` classes on your `<ReactMarkdown>` container:
+   ```html
+   <ReactMarkdown
+     remarkPlugins="{[remarkGfm]}"
+     className="prose prose-slate max-w-none text-gray-800"
+     components="{markdownComponents}"
+   >
+     {content.response}
+   </ReactMarkdown>
+   ```
+3. Leave the plugin to handle spacing (paragraph margins, line height, etc.) instead of manually overriding them in `markdownComponents`.
+4. If you do need custom behavior—like color-coding bracketed text—try applying those transformations _before_ you pass the text to `<ReactMarkdown>`, so that the final `ReactMarkdown` call can handle the paragraphs normally.
+
+---
+
+## 3. Style headings, bold, lists, etc.
+
+- Headings (`#`, `##`, `###`) in Markdown automatically become larger fonts under `prose`.
+- Bold text (`**bold**`) is already recognized by ReactMarkdown and styled by Tailwind’s `prose`.
+- If you want your headings to stand out even more, you can extend the default typography settings in `tailwind.config.js`. For instance:
+
+  ```js
+  // tailwind.config.js
+  theme: {
+    extend: {
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            h1: {
+              color: theme("colors.gray.900"),
+              fontWeight: "700",
+            },
+            h2: {
+              color: theme("colors.gray.900"),
+              fontWeight: "600",
+            },
+            // ...
+          }
+        }
+      })
+    }
+  },
+  ```
+
+  Then ensure you keep `className="prose"` on your output so it picks up these styles.
+
+---
+
+## 4. Consider removing or relaxing the forced `<br/>` insertion
+
+You currently do:
+
+```js
+.replace(/\n/g, "<br/>")
+```
+
+This forces every newline inside the text into `<br/>`, which can result in cramped line breaks or odd spacing if the model outputs lots of newlines. If your intention is to let Markdown handle paragraphs and line breaks more naturally, you can remove this replacement. Letting the default `ReactMarkdown` logic parse newlines is often more readable.
+
+---
+
+## 5. Use the built-in Markdown for bold/highlight
+
+Since you already have:
+
+```js
+strong: ({ node, ...props }) => {
+  const content = props.children;
+  return <strong className="font-bold text-gray-900">{content}</strong>;
+},
+```
+
+All Markdown `**bold**` or `__bold__` text is automatically rendered in bold. If you want to visually highlight text more aggressively, you could add a background color or a highlight class, but typically the default strong styling is enough.
+
+---
+
+## 6. Double-check your container’s overall styling
+
+You have wrappers like:
+
+```html
+<div className="bg-white rounded-xl p-4 shadow-lg">
+  <div className="prose prose-slate max-w-none text-gray-800">
+    <ReactMarkdown ... />
+  </div>
+</div>
+```
+
+Make sure those container styles (especially `p-4` vs. `p-2`) are what you want. The interplay between container padding, text spacing, and line height can make a big difference for readability.
+
+---
+
+### Example snippet
+
+Here’s how you might simplify your `markdownComponents` to rely more on Tailwind typography defaults:
+
+```jsx
+const markdownComponents = useMemo(
+  () => ({
+    strong: ({ node, ...props }) => (
+      <strong className="font-bold text-gray-900">{props.children}</strong>
+    ),
+    // For bracketed highlights, do a quick replace *before* rendering:
+    // e.g., pass the content through a transform function that replaces [brackets]
+    // with <span> highlights, so you don’t have to override the p / li entirely.
+  }),
+  []
+);
+
+...
+
+<ReactMarkdown
+  remarkPlugins={[remarkGfm]}
+  className="prose prose-slate max-w-none text-gray-800"
+  components={markdownComponents}
+>
+  {cleanedResponse /* with bracket highlights replaced if needed */}
+</ReactMarkdown>
+```
+
+Then remove the custom replacements for paragraphs and lists if you don’t truly need them. Tailwind’s `.prose` style typically handles paragraphs (`p`) with nice spacing by default.
+
+---
+
+## Key Takeaways
+
+1. **Paragraph margin & line height**: Increase `my-*` and `leading-*` in your custom paragraph or rely on the built-in `.prose` defaults.
+2. **Remove forced `<br/>`**: Let ReactMarkdown handle newlines more naturally.
+3. **Rely on Tailwind Typography plugin**: Minimizing custom overrides often yields cleaner, more consistent styling out of the box.
+4. **Extend as needed**: You can refine heading sizes, link color, code block styling, etc. in `tailwind.config.js` if the defaults aren’t enough.
+
+With these tweaks, you’ll get a significantly more readable LLM response in your UI. citeturn0file0

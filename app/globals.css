@@ -1,0 +1,471 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+body {
+  background-color: #0a0b2e;
+  color: #ffffff;
+}
+
+/* Container styles */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+/* Form elements */
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  resize: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.5;
+  min-height: 112px;
+  overflow-y: hidden;
+  transition: height 0.1s ease-out;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  ring: 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Markdown content styles */
+.prose {
+  color: #1f2937;
+  max-width: none;
+}
+
+.prose p {
+  margin: 1rem 0;
+  padding: 0;
+  text-align: left;
+}
+
+.prose p strong {
+  display: block;
+  margin-top: 1rem;
+}
+
+.prose p[data-content^="**"] {
+  text-indent: 0;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.prose > * + * {
+  margin-top: 1rem;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: #1f2937;
+  font-weight: 700;
+  margin: 2rem 0 1rem 0;
+}
+
+.prose ul,
+.prose ol {
+  margin: 1rem 0;
+  padding-left: 1rem;
+}
+
+.prose li {
+  margin: 0.25rem 0;
+  padding-left: 0.25rem;
+}
+
+/* Style blockquotes */
+.prose blockquote {
+  border-left: 4px solid #3b82f6;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  color: #4b5563;
+  font-style: italic;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+}
+
+/* Improve code block appearance */
+.prose pre {
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+.prose code {
+  color: #1f2937;
+  background-color: #f1f5f9;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+/* Improve highlighted text appearance */
+.bg-yellow-100 {
+  background-color: #fef9c3;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.25rem;
+  transition: background-color 0.2s ease;
+}
+
+.bg-yellow-100:hover {
+  background-color: #fef08a;
+}
+
+/* Add this to ensure response text is visible in the white container */
+.bg-white p,
+.bg-white li,
+.bg-white h3,
+.bg-white strong {
+  color: #1f2937 !important;
+}
+
+/* For the question section which has gray background */
+.bg-gray-50 p,
+.bg-gray-200 p {
+  color: #1f2937;
+}
+
+/* List styles from root globals.css */
+ol {
+  list-style-position: outside;
+}
+
+ol > li {
+  padding-left: 0.5rem;
+}
+
+.list-outside {
+  padding-left: 1rem;
+}
+
+/* Placeholder highlighting */
+.placeholder-highlight {
+  background-color: #fef08a;
+  color: #1f2937;
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Main title styles */
+.main-title {
+  max-width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* RTL Support */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl.prose {
+  direction: rtl;
+}
+
+.rtl.prose ul,
+.rtl.prose ol {
+  padding-right: 1.25rem;
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+.rtl.prose ol {
+  list-style-type: none;
+  counter-reset: none;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* Translation content styles */
+.translation-content.rtl.prose ol {
+  list-style-type: none;
+  counter-reset: none;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.translation-content.rtl.prose ol > li {
+  position: relative;
+  padding-right: 2rem;
+  margin-right: 0;
+}
+
+.translation-content.rtl.prose ol > li::before {
+  display: none;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .max-w-3xl {
+    padding: 0 0.5rem;
+  }
+
+  .text-4xl {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  textarea {
+    min-height: 112px;
+    font-size: 16px !important;
+  }
+
+  .flex.items-center.justify-between {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .prose {
+    font-size: 1.125rem !important;
+  }
+
+  .prose p,
+  .prose ol,
+  .prose ul,
+  .prose-slate {
+    font-size: 1.125rem !important;
+    line-height: 1.75 !important;
+  }
+
+  .mobile-clear-btn {
+    width: 50% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-content: center !important;
+  }
+
+  .grid.grid-cols-6 button {
+    font-size: 1rem !important;
+    padding: 0.5rem 0.25rem;
+    min-height: 40px;
+    width: 100%;
+    font-weight: bold !important;
+  }
+
+  .text-gray-700,
+  .text-gray-800,
+  .text-gray-900,
+  .bg-white p-3 {
+    font-size: 1.125rem !important;
+  }
+
+  .mb-4.text-gray-700 {
+    font-size: 1.125rem !important;
+  }
+
+  .bg-white.p-3.rounded-lg {
+    font-size: 1.125rem !important;
+  }
+
+  /* Stats modal word frequency grid styles */
+  .bg-gray-700\/50 .grid-cols-3 {
+    gap: 0.5rem;
+  }
+
+  .bg-gray-700\/50 .text-sm {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
+
+  .bg-gray-700\/50 .space-y-2 > div {
+    margin-bottom: 0.5rem;
+  }
+
+  .bg-white.rounded-xl {
+    padding: 1rem !important;
+  }
+
+  .flex.flex-col.space-y-2.mt-2 button {
+    font-size: 0.95rem !important;
+    padding: 0.75rem;
+  }
+
+  .prose h1,
+  .prose h2 {
+    font-size: 1.7em !important;
+  }
+
+  .prose h3 {
+    font-size: 1.5em !important;
+  }
+
+  .prose h4 {
+    font-size: 1.25em !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid.grid-cols-6 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .grid.grid-cols-6 button {
+    font-size: 0.95rem !important;
+    padding: 0 0.5rem 0.25rem;
+    min-height: 40px;
+    font-weight: bold !important;
+  }
+}
+
+/* Default button size */
+.grid.grid-cols-6 button {
+  font-size: 1rem;
+}
+
+.prose strong {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+/* Add or update the placeholder highlighting styles */
+.bg-yellow-100 {
+  background-color: #fef9c3;
+}
+
+/* Make sure the highlighted text is clearly visible */
+.bg-yellow-100 .font-medium {
+  color: #1f2937;
+  font-weight: 500;
+}
+
+/* Add a subtle transition effect */
+.bg-yellow-100 {
+  transition: background-color 0.2s ease;
+}
+
+/* Optional hover effect */
+.bg-yellow-100:hover {
+  background-color: #fef08a;
+}
+
+/* Add or update the example button styles */
+.flex.flex-col.space-y-2.mt-2 button {
+  white-space: normal;
+  text-align: left;
+  height: auto;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  line-height: 1.4;
+  display: block;
+  width: 100%;
+}
+
+/* Update the link styles */
+.prose a {
+  color: #2563eb !important;
+  font-size: 1rem !important;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+  line-height: inherit;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  display: inline-block;
+}
+
+/* Override heading link sizes */
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a {
+  font-size: 1rem !important;
+}
+
+/* For links in translated content */
+.translation-content .prose a {
+  font-size: 1rem !important;
+}
+
+/* Ensure links are visible and properly wrapped in containers */
+.bg-white .prose a {
+  font-size: 1rem !important;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Add max font size limit for regular text */
+.prose {
+  color: #1f2937;
+  max-width: none;
+}
+
+.prose h1,
+.prose h2 {
+  font-size: 1.7em !important;
+}
+
+/* Keep h3 and h4 as they are since they're smaller than 1.7em */
+.prose h3 {
+  font-size: 1.5em;
+}
+
+.prose h4 {
+  font-size: 1.25em;
+}
+
+/* Preserve link styles */
+.prose a {
+  color: #2563eb !important;
+  font-size: 1rem !important;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+  line-height: inherit;
+}
+
+/* Ensure consistent left alignment */
+.bg-white .prose p,
+.bg-white .prose .numbered-list-item {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  text-align: left !important;
+}
+
+/* Update list styles */
+.prose ol {
+  list-style-type: decimal;
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.prose ol > li {
+  position: relative;
+  padding-left: 0.5rem;
+  margin-bottom: 0;
+  color: #1f2937;
+  line-height: 1.75;
+}
+
+/* Remove any extra spacing */
+.prose ol > li + li {
+  margin-top: 1rem;
+}
+
+/* Remove old styles */
+.numbered-list-item,
+.prose p strong + br {
+  display: none;
+}
+
+/* Ensure proper text color */
+.bg-white .prose ol > li {
+  color: #1f2937 !important;
+}

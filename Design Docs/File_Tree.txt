@@ -1,0 +1,31 @@
+
+File Tree as of Mon 05/19/2025
+Root Path: C:\Users\Sam\Desktop\Side Projects\Customize Cursor
+
+  |   custom.css
+  |   File_Tree.txt
+  |   Make_Tree.bat
+  |   TDD.md
+  |   tweaks.js
+  |   
+  +---Guides
+  |       TDD.md
+  |       
+  \---Prompts
+          Celery & Localhost
+          Diagnostic.md
+          Firewall.txt
+          Handoff-AsyncAudioExport.md
+          Handoff-AsyncAudioFinalization.md
+          Handoff-HerokuAudioStorage.md
+          Handoff-HerokuTimeoutAudioExport.md
+          Handoff-iOS-Paste-Word-Merge.md
+          Handoff-iOSLocalhostAccess.md
+          Handoff.md
+          Heroku Logs.txt
+          o3-900.txt
+          o3-response.txt
+          perpelxity.md
+          ProjectClose.md
+          S3 tips.txt
+          
